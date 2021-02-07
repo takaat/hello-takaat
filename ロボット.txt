@@ -1,0 +1,52 @@
+let x = readLine()!.split(separator: " ")
+var (h,w,sy,sx,n) = (Int(x[0])!,Int(x[1])!,Int(x[2])!,Int(x[3])!,Int(x[4])!)
+var map:[[String]] = []
+for _ in 1...h{
+    map.append(readLine()!.map{String($0)})
+}
+var di:[String] = []
+var m:[Int] = []
+for _ in 1...n{
+    let x = readLine()!.split(separator:" ")
+    di.append(String(x[0]))
+    m.append(Int(x[1])!)
+}
+//print(di,m)
+
+var d = "N" //初期の方向
+var (presy,presx) = (sy,sx) //移動前の座標
+a:for i in 0..<n{
+    switch (d,di[i]) {
+        case ("N","R"): d="E"
+        case ("N","L"): d="W"
+        case ("S","R"): d="W"
+        case ("S","L"): d="E"
+        case ("E","R"): d="S"
+        case ("E","L"): d="N"
+        case ("W","R"): d="N"
+        case ("W","L"): d="S"
+        default : break
+    }
+    for _ in 1...m[i]{
+        switch d{
+            case "N" : sy=presy-1 
+            case "S" : sy=presy+1
+            case "E" : sx=presx+1
+            case "W" : sx=presx-1
+            default : break
+        }
+        if 0>sy || sy>h || 0>sx || sx>w{
+            print(presy,presx)
+            print("Stop")
+            break a
+        }
+        else if map[sy][sx]=="#"{
+            print(presy,presx)
+            print("Stop")
+            break a
+        }
+    (presy,presx)=(sy,sx)    
+    }
+    print(sy,sx)
+}
+
